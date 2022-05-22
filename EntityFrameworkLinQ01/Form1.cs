@@ -111,7 +111,7 @@ namespace EntityFrameworkLinQ01
             //                    nombre = a.nombre,
             //                    nota = n.nota
             //                };
-                
+
             //    foreach(var fil in query)
             //    {
             //        table.Rows.Add(fil.nombre, fil.nota);
@@ -122,26 +122,106 @@ namespace EntityFrameworkLinQ01
 
             // CONSULTA DE DEPARTAMENTOS Y PROVINCIAS
 
+            //using (var db = new ModelEjercicio())
+            //{
+            //    DataTable table = CreaGrilla(new string[] { "Departamentos", "Provincias", "Distritos" });
+
+            //    var query = from a in db.departamentos
+            //                join n in db.provincias on a.iddepartamento equals n.iddepartamento
+            //                join d in db.distritos on n.idprovincia equals d.idprovincia
+            //                select new
+            //                {
+            //                    nombre = a.departamento,
+            //                    nota = n.provincia,
+            //                    dis = d.distrito
+            //                };
+
+            //    foreach (var fil in query)
+            //    {
+            //        table.Rows.Add(fil.nombre, fil.nota, fil.dis);
+            //    }
+
+            //    dataGridView1.DataSource = table;
+
+            //}
+
+            // CONSULTA DE ALUMNOS CON SUS PROMEDIOS, CANTIDAD DE NOTAS, SUMA, MAXIMA Y MINIMA NOTA
+
+            //using (var db = new ModelEjercicio())
+            //{
+            //    DataTable table = CreaGrilla(new string[] { "Alumno", "Promedio", "Count", "Sum", "Max", "Min" });
+
+            //    var query = from n in db.notas 
+            //                group n by n.alumnos2.nombre into grupo
+            //                select new {
+            //                    alumno = grupo.Key,
+            //                    promedio = grupo.Average(x => x.nota),
+            //                    count = grupo.Count(),
+            //                    sum = grupo.Sum(x => x.nota),
+            //                    max = grupo.Max(x => x.nota),
+            //                    min = grupo.Min(x => x.nota)
+            //                };
+
+            //    foreach (var fil in query)
+            //    {
+            //        table.Rows.Add(fil.alumno, fil.promedio.ToString("#0.00"), fil.count, fil.sum, fil.max, fil.min);
+            //    }
+
+            //    dataGridView1.DataSource = table;
+
+            //}
+
+            // CONSULTA DE ALUMNOS CON SUS PROMEDIOS, CANTIDAD DE NOTAS, SUMA, MAXIMA Y MINIMA NOTA (JOIN)
+
+            //using (var db = new ModelEjercicio())
+            //{
+            //    DataTable table = CreaGrilla(new string[] { "Alumno", "Promedio", "Count", "Sum", "Max", "Min" });
+
+            //    var query = from a in db.alumnos2
+            //                join n in db.notas on a.idalumno equals n.idalumno
+            //                group n by n.alumnos2.nombre into grupo
+            //                select new
+            //                {
+            //                    alumno = grupo.Key,
+            //                    promedio = grupo.Average(x => x.nota),
+            //                    count = grupo.Count(),
+            //                    sum = grupo.Sum(x => x.nota),
+            //                    max = grupo.Max(x => x.nota),
+            //                    min = grupo.Min(x => x.nota)
+            //                };
+
+            //    foreach (var fil in query)
+            //    {
+            //        table.Rows.Add(fil.alumno, fil.promedio.ToString("#0.00"), fil.count, fil.sum, fil.max, fil.min);
+            //    }
+
+            //    dataGridView1.DataSource = table;
+
+            //}
+
+            // CONSULTA DE DEPARTAMENTOS CON SU CANTIDAD DE PROVINCIAS (JOIN)
+
             using (var db = new ModelEjercicio())
             {
-                DataTable table = CreaGrilla(new string[] { "Departamentos", "Provincias", "Distritos" });
+                DataTable table = CreaGrilla(new string[] { "Departamento", "Count" });
 
                 var query = from a in db.departamentos
                             join n in db.provincias on a.iddepartamento equals n.iddepartamento
                             join d in db.distritos on n.idprovincia equals d.idprovincia
+                            group d by n.departamentos.departamento into grupo
                             select new
                             {
-                                nombre = a.departamento,
-                                nota = n.provincia,
-                                dis = d.distrito
+                                departamento = grupo.Key,
+                                count = grupo.Count()
                             };
 
                 foreach (var fil in query)
                 {
-                    table.Rows.Add(fil.nombre, fil.nota, fil.dis);
+                    table.Rows.Add(fil.departamento, fil.count);
                 }
 
                 dataGridView1.DataSource = table;
+
             }
         }
 
