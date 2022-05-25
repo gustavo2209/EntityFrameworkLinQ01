@@ -201,28 +201,72 @@ namespace EntityFrameworkLinQ01
 
             // CONSULTA DE DEPARTAMENTOS CON SU CANTIDAD DE PROVINCIAS (JOIN)
 
-            using (var db = new ModelEjercicio())
+            //using (var db = new ModelEjercicio())
+            //{
+            //    DataTable table = CreaGrilla(new string[] { "Departamento", "Count" });
+
+            //    var query = from a in db.departamentos
+            //                join n in db.provincias on a.iddepartamento equals n.iddepartamento
+            //                join d in db.distritos on n.idprovincia equals d.idprovincia
+            //                group d by n.departamentos.departamento into grupo
+            //                select new
+            //                {
+            //                    departamento = grupo.Key,
+            //                    count = grupo.Count()
+            //                };
+
+            //    foreach (var fil in query)
+            //    {
+            //        table.Rows.Add(fil.departamento, fil.count);
+            //    }
+
+            //    dataGridView1.DataSource = table;
+
+            //}
+
+            // CONSULTA DE DEPARTAMENTOS CON SU CANTIDAD DE PROVINCIAS Y DISTRITOS (JOIN)
+
+            //using (var db = new ModelEjercicio())
+            //{
+            //    DataTable table = CreaGrilla(new string[] { "Departamento", "Total Prov.", "Total Dist." });
+
+            //    var query = from depa in db.departamentos
+            //                select new
+            //                {
+            //                    departamento = depa.departamento,
+            //                    provincias = (from prov in db.provincias.Where(p => p.iddepartamento == depa.iddepartamento) 
+            //                                  select prov.idprovincia).ToList().Count,
+            //                    distritos = (from dist in db.distritos where depa.provincias.Contains(dist.provincias)
+            //                                 select dist).ToList().Count
+            //                };
+
+            //    foreach (var fil in query)
+            //    {
+            //        table.Rows.Add(fil.departamento, fil.provincias, fil.distritos);
+            //    }
+
+            //    dataGridView1.DataSource = table;
+
+            //}
+
+            // PAGINACION
+            
+            using(var db = new ModelEjercicio())
             {
-                DataTable table = CreaGrilla(new string[] { "Departamento", "Count" });
+                DataTable table = CreaGrilla(new string[] { "ID", "Departamento" });
 
-                var query = from a in db.departamentos
-                            join n in db.provincias on a.iddepartamento equals n.iddepartamento
-                            join d in db.distritos on n.idprovincia equals d.idprovincia
-                            group d by n.departamentos.departamento into grupo
-                            select new
-                            {
-                                departamento = grupo.Key,
-                                count = grupo.Count()
-                            };
+                var query = (from depa in db.departamentos
+                             orderby depa.departamento
+                             select depa).Skip(20).Take(5); // 5, 5/10, 5/15, 5/20
 
-                foreach (var fil in query)
+                foreach(var fil in query)
                 {
-                    table.Rows.Add(fil.departamento, fil.count);
+                    table.Rows.Add(fil.iddepartamento, fil.departamento);
                 }
 
                 dataGridView1.DataSource = table;
-
             }
+            
         }
 
         private DataTable CreaGrilla(string[] titulos)
