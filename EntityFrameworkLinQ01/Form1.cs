@@ -68,7 +68,7 @@ namespace EntityFrameworkLinQ01
 
             // CONSULTA DE NOTAS Y ALUMNOS
 
-            /*using(var db = new ModelEjercicio())
+            using(var db = new ModelEjercicio())
             {
                 DataTable table = CreaGrilla(new string[] { "Alumno", "Nota" });
 
@@ -80,7 +80,7 @@ namespace EntityFrameworkLinQ01
                 }
 
                 dataGridView1.DataSource = table;
-            }*/
+            }
 
             // CONSULTA DE DISTRITOS, PROVINCIAS Y DEPARTAMENTOS
 
@@ -251,7 +251,7 @@ namespace EntityFrameworkLinQ01
 
             // PAGINACION
             
-            using(var db = new ModelEjercicio())
+            /*using(var db = new ModelEjercicio())
             {
                 DataTable table = CreaGrilla(new string[] { "ID", "Departamento" });
 
@@ -265,7 +265,7 @@ namespace EntityFrameworkLinQ01
                 }
 
                 dataGridView1.DataSource = table;
-            }
+            }*/
             
         }
 
